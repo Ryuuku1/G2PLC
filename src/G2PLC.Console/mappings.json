@@ -1,0 +1,172 @@
+{
+  "RegisterMappings": {
+    "Axes": {
+      "X": {
+        "Address": 0,
+        "ScaleFactor": 1000.0,
+        "Description": "X-axis linear position in microns (left-right)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Y": {
+        "Address": 1,
+        "ScaleFactor": 1000.0,
+        "Description": "Y-axis linear position in microns (front-back)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Z": {
+        "Address": 2,
+        "ScaleFactor": 1000.0,
+        "Description": "Z-axis linear position in microns (vertical up-down)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "U": {
+        "Address": 10,
+        "ScaleFactor": 1000.0,
+        "Description": "U-axis parallel to X (secondary linear axis) in microns",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "V": {
+        "Address": 11,
+        "ScaleFactor": 1000.0,
+        "Description": "V-axis parallel to Y (secondary linear axis) in microns",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "W": {
+        "Address": 12,
+        "ScaleFactor": 1000.0,
+        "Description": "W-axis parallel to Z (secondary linear axis) in microns",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "A": {
+        "Address": 13,
+        "ScaleFactor": 1000.0,
+        "Description": "A-axis rotational around X in millidegrees",
+        "AxisType": "Rotational",
+        "Unit": "degrees"
+      },
+      "B": {
+        "Address": 14,
+        "ScaleFactor": 1000.0,
+        "Description": "B-axis rotational around Y in millidegrees",
+        "AxisType": "Rotational",
+        "Unit": "degrees"
+      },
+      "C": {
+        "Address": 15,
+        "ScaleFactor": 1000.0,
+        "Description": "C-axis rotational around Z (table rotation) in millidegrees",
+        "AxisType": "Rotational",
+        "Unit": "degrees"
+      }
+    },
+    "Commands": {
+      "GCommand": {
+        "Address": 6,
+        "ScaleFactor": 1.0,
+        "Description": "Current G-code command number (motion/mode)"
+      },
+      "MCommand": {
+        "Address": 7,
+        "ScaleFactor": 1.0,
+        "Description": "Current M-code command number (machine control)"
+      }
+    },
+    "Parameters": {
+      "FeedRate": {
+        "Address": 3,
+        "ScaleFactor": 10.0,
+        "Description": "Feed rate in mm/min scaled by 10 for precision"
+      },
+      "SpindleSpeed": {
+        "Address": 4,
+        "ScaleFactor": 1.0,
+        "Description": "Spindle speed in RPM (0-24000)"
+      },
+      "ToolNumber": {
+        "Address": 5,
+        "ScaleFactor": 1.0,
+        "Description": "Current tool number in spindle (0-99)"
+      }
+    },
+    "DigitalOutputs": {
+      "CoolantFlood": {
+        "Address": 100,
+        "Description": "Flood coolant pump (high volume cooling)",
+        "TriggerMCode": 8,
+        "TriggerValue": true
+      },
+      "CoolantMist": {
+        "Address": 101,
+        "Description": "Mist coolant system (fine spray cooling)",
+        "TriggerMCode": 7,
+        "TriggerValue": true
+      },
+      "SpindleEnable": {
+        "Address": 102,
+        "Description": "Spindle motor enable signal",
+        "TriggerMCode": 3,
+        "TriggerValue": true
+      },
+      "SpindleDirection": {
+        "Address": 103,
+        "Description": "Spindle direction (true=CW/M3, false=CCW/M4)"
+      },
+      "AuxOutput1": {
+        "Address": 104,
+        "Description": "Auxiliary output 1 for custom machine control"
+      },
+      "AuxOutput2": {
+        "Address": 105,
+        "Description": "Auxiliary output 2 for custom machine control"
+      }
+    },
+    "CustomRegisters": {
+      "ToolLength": {
+        "Address": 20,
+        "ScaleFactor": 1000.0,
+        "Description": "Tool length offset in microns"
+      },
+      "ToolDiameter": {
+        "Address": 21,
+        "ScaleFactor": 1000.0,
+        "Description": "Tool diameter for compensation in microns"
+      },
+      "WorkCoordinateSystem": {
+        "Address": 22,
+        "ScaleFactor": 1.0,
+        "Description": "Active work coordinate system number (G54-G59)"
+      }
+    }
+  },
+  "ValidationRules": {
+    "Position": {
+      "MinValue": -10000.0,
+      "MaxValue": 10000.0,
+      "ClampNegativeToZero": true
+    },
+    "FeedRate": {
+      "MinValue": 1.0,
+      "MaxValue": 10000.0
+    },
+    "SpindleSpeed": {
+      "MinValue": 0,
+      "MaxValue": 65535
+    },
+    "ToolNumber": {
+      "MinValue": 0,
+      "MaxValue": 99
+    }
+  },
+  "ProcessingOptions": {
+    "DelayBetweenCommandsMs": 100,
+    "VerifyWritesEnabled": false,
+    "ContinueOnError": true,
+    "MaxRetries": 3
+  }
+}

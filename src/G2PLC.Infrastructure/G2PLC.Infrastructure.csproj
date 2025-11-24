@@ -6,4 +6,16 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\G2PLC.Domain\G2PLC.Domain.csproj" />
+        <ProjectReference Include="..\G2PLC.Application\G2PLC.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NModbus" Version="3.0.81" />
+        <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="1.5.377.22" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
+    </ItemGroup>
+
 </Project>

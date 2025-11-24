@@ -1,0 +1,109 @@
+{
+  "RegisterMappings": {
+    "Axes": {
+      "X": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "X-axis position",
+        "AxisType": "Linear",
+        "Unit": "mm",
+        "OpcUaNodePath": "ns=2;s=CNC.Axes.X.Position"
+      },
+      "Y": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "Y-axis position",
+        "AxisType": "Linear",
+        "Unit": "mm",
+        "OpcUaNodePath": "ns=2;s=CNC.Axes.Y.Position"
+      },
+      "Z": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "Z-axis position",
+        "AxisType": "Linear",
+        "Unit": "mm",
+        "OpcUaNodePath": "ns=2;s=CNC.Axes.Z.Position"
+      },
+      "A": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "A-axis rotation",
+        "AxisType": "Rotary",
+        "Unit": "degrees",
+        "OpcUaNodePath": "ns=2;s=CNC.Axes.A.Position"
+      },
+      "B": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "B-axis rotation",
+        "AxisType": "Rotary",
+        "Unit": "degrees",
+        "OpcUaNodePath": "ns=2;s=CNC.Axes.B.Position"
+      },
+      "C": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "C-axis rotation",
+        "AxisType": "Rotary",
+        "Unit": "degrees",
+        "OpcUaNodePath": "ns=2;s=CNC.Axes.C.Position"
+      }
+    },
+    "FeedRate": {
+      "Address": 0,
+      "ScaleFactor": 10,
+      "Description": "Feed rate (F command)",
+      "OpcUaNodePath": "ns=2;s=CNC.FeedRate"
+    },
+    "SpindleSpeed": {
+      "Address": 0,
+      "ScaleFactor": 1,
+      "Description": "Spindle speed (S command)",
+      "OpcUaNodePath": "ns=2;s=CNC.Spindle.Speed"
+    },
+    "ToolNumber": {
+      "Address": 0,
+      "ScaleFactor": 1,
+      "Description": "Tool number (T command)",
+      "OpcUaNodePath": "ns=2;s=CNC.Tool.Number"
+    },
+    "GCommand": {
+      "Address": 0,
+      "ScaleFactor": 1,
+      "Description": "G-code command number",
+      "OpcUaNodePath": "ns=2;s=CNC.Command.GCode"
+    },
+    "MCommand": {
+      "Address": 0,
+      "ScaleFactor": 1,
+      "Description": "M-code command number",
+      "OpcUaNodePath": "ns=2;s=CNC.Command.MCode"
+    }
+  },
+  "OpcUaSettings": {
+    "EndpointUrl": "opc.tcp://192.168.1.100:4840",
+    "SecurityMode": "None",
+    "SecurityPolicy": "None",
+    "ApplicationName": "G2PLC Client",
+    "SessionTimeout": 60000,
+    "Notes": [
+      "For OPC UA, the Address field is not used - node paths define the target variables",
+      "Node paths follow OPC UA naming convention: ns=<namespace>;s=<identifier>",
+      "Adjust namespace index (ns=) based on your OPC UA server configuration",
+      "Security settings can be configured for encrypted communication",
+      "Example endpoint URLs:",
+      "  - opc.tcp://localhost:4840",
+      "  - opc.tcp://192.168.1.100:4840/UAServer",
+      "  - opc.tcp://plc.company.com:4840"
+    ]
+  },
+  "Notes": [
+    "This is an OPC UA mapping example for a 6-axis CNC machine",
+    "OPC UA uses node paths instead of register addresses",
+    "The Address field in OPC UA mappings is ignored (set to 0)",
+    "Node paths must match your OPC UA server's address space",
+    "ScaleFactor still applies: value is multiplied before writing",
+    "Example: X=10.5mm with ScaleFactor=1000 → Write 10500 to ns=2;s=CNC.Axes.X.Position"
+  ]
+}

@@ -1,0 +1,95 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Menu -->
+    <system:String x:Key="Menu.File">_Ficheiro</system:String>
+    <system:String x:Key="Menu.LoadFile">_Carregar Ficheiro</system:String>
+    <system:String x:Key="Menu.Exit">_Sair</system:String>
+
+    <system:String x:Key="Menu.Configuration">_Configuração</system:String>
+    <system:String x:Key="Menu.EditMappings">_Editar Mapeamentos</system:String>
+    <system:String x:Key="Menu.LoadMappings">_Carregar Ficheiro de Mapeamentos</system:String>
+    <system:String x:Key="Menu.SaveMappings">_Guardar Ficheiro de Mapeamentos</system:String>
+
+    <system:String x:Key="Menu.View">_Ver</system:String>
+    <system:String x:Key="Menu.DarkTheme">Tema Escuro</system:String>
+    <system:String x:Key="Menu.LightTheme">Tema Claro</system:String>
+    <system:String x:Key="Menu.Language">_Idioma</system:String>
+    <system:String x:Key="Menu.English">English</system:String>
+    <system:String x:Key="Menu.Portuguese">Português (Portugal)</system:String>
+
+    <system:String x:Key="Menu.Documents">_Documentos</system:String>
+    <system:String x:Key="Menu.OpenExamplesFolder">_Abrir Pasta de Exemplos</system:String>
+    <system:String x:Key="Menu.ModbusExample">Exemplo de Mapeamento Modbus</system:String>
+    <system:String x:Key="Menu.OpcUaExample">Exemplo de Mapeamento OPC UA</system:String>
+    <system:String x:Key="Menu.Simple3AxisExample">Exemplo Simples de 3 Eixos</system:String>
+
+    <system:String x:Key="Menu.Help">_Ajuda</system:String>
+    <system:String x:Key="Menu.About">_Acerca</system:String>
+
+    <!-- Main Window -->
+    <system:String x:Key="Window.Title">G2PLC - Controlador CNC para PLC</system:String>
+
+    <!-- File Selection Section -->
+    <system:String x:Key="FileSelection.Header">Seleção de Ficheiro</system:String>
+    <system:String x:Key="FileSelection.FileType">Tipo de Ficheiro:</system:String>
+    <system:String x:Key="FileSelection.Browse">Procurar...</system:String>
+    <system:String x:Key="FileSelection.Tooltip">Caminho do ficheiro selecionado</system:String>
+
+    <!-- PLC Configuration Section -->
+    <system:String x:Key="PlcConfig.Header">Configuração do PLC</system:String>
+    <system:String x:Key="PlcConfig.PlcType">Tipo de PLC:</system:String>
+    <system:String x:Key="PlcConfig.Connect">Ligar</system:String>
+    <system:String x:Key="PlcConfig.Disconnect">Desligar</system:String>
+    <system:String x:Key="PlcConfig.IpAddress">Endereço IP:</system:String>
+    <system:String x:Key="PlcConfig.Port">Porta:</system:String>
+    <system:String x:Key="PlcConfig.EndpointUrl">URL do Endpoint:</system:String>
+
+    <!-- Execution Control Section -->
+    <system:String x:Key="Execution.Header">Controlo de Execução</system:String>
+    <system:String x:Key="Execution.Start">▶ Iniciar</system:String>
+    <system:String x:Key="Execution.Stop">⏹ Parar</system:String>
+    <system:String x:Key="Execution.Line">Linha:</system:String>
+    <system:String x:Key="Execution.Progress">Progresso:</system:String>
+
+    <!-- Status and Log Section -->
+    <system:String x:Key="Status.Header">Estado e Registo</system:String>
+    <system:String x:Key="Status.Connected">PLC Ligado</system:String>
+    <system:String x:Key="Status.Disconnected">PLC Desligado</system:String>
+
+    <!-- About Dialog -->
+    <system:String x:Key="About.Title">Acerca do G2PLC</system:String>
+    <system:String x:Key="About.Message">G2PLC - Controlador CNC para PLC
+
+Versão 1.0
+
+Uma aplicação profissional para converter ficheiros G-Code e LSF
+em comandos PLC através dos protocolos Modbus TCP ou OPC UA.
+
+© 2025</system:String>
+
+    <!-- Mappings Editor Window -->
+    <system:String x:Key="Mappings.Title">Editar Mapeamentos de Variáveis</system:String>
+    <system:String x:Key="Mappings.Header">Mapeamentos de Eixos (Parâmetros G-Code para Registos PLC)</system:String>
+    <system:String x:Key="Mappings.Description">Configure qual o endereço de registo PLC onde cada eixo deve escrever:</system:String>
+    <system:String x:Key="Mappings.Axis">Eixo</system:String>
+    <system:String x:Key="Mappings.AxisDescription">Descrição</system:String>
+    <system:String x:Key="Mappings.RegisterAddress">Endereço de Registo</system:String>
+    <system:String x:Key="Mappings.ScaleFactor">Fator de Escala</system:String>
+    <system:String x:Key="Mappings.Information">Informação</system:String>
+    <system:String x:Key="Mappings.Info1">• Endereço de Registo: O número do registo de retenção Modbus onde o valor deste eixo será escrito</system:String>
+    <system:String x:Key="Mappings.Info2">• Fator de Escala: Multiplicador aplicado ao valor (por exemplo, 1000 converte mm em microns)</system:String>
+    <system:String x:Key="Mappings.Info3">• Para OPC UA, o caminho do nó será: ns=2;s=CNC.Axes.{Axis}.Position</system:String>
+    <system:String x:Key="Mappings.Save">Guardar</system:String>
+    <system:String x:Key="Mappings.Cancel">Cancelar</system:String>
+
+    <!-- File Types -->
+    <system:String x:Key="FileType.GCode">G-Code</system:String>
+    <system:String x:Key="FileType.LSF">LSF (Howick)</system:String>
+
+    <!-- PLC Types -->
+    <system:String x:Key="PlcType.Modbus">Modbus</system:String>
+    <system:String x:Key="PlcType.OpcUa">OPC UA</system:String>
+
+</ResourceDictionary>

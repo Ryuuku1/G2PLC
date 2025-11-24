@@ -1,0 +1,95 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Menu -->
+    <system:String x:Key="Menu.File">_File</system:String>
+    <system:String x:Key="Menu.LoadFile">_Load File</system:String>
+    <system:String x:Key="Menu.Exit">_Exit</system:String>
+
+    <system:String x:Key="Menu.Configuration">_Configuration</system:String>
+    <system:String x:Key="Menu.EditMappings">_Edit Mappings</system:String>
+    <system:String x:Key="Menu.LoadMappings">_Load Mappings File</system:String>
+    <system:String x:Key="Menu.SaveMappings">_Save Mappings File</system:String>
+
+    <system:String x:Key="Menu.View">_View</system:String>
+    <system:String x:Key="Menu.DarkTheme">Dark Theme</system:String>
+    <system:String x:Key="Menu.LightTheme">Light Theme</system:String>
+    <system:String x:Key="Menu.Language">_Language</system:String>
+    <system:String x:Key="Menu.English">English</system:String>
+    <system:String x:Key="Menu.Portuguese">Português (Portugal)</system:String>
+
+    <system:String x:Key="Menu.Documents">_Documents</system:String>
+    <system:String x:Key="Menu.OpenExamplesFolder">_Open Examples Folder</system:String>
+    <system:String x:Key="Menu.ModbusExample">Modbus Mapping Example</system:String>
+    <system:String x:Key="Menu.OpcUaExample">OPC UA Mapping Example</system:String>
+    <system:String x:Key="Menu.Simple3AxisExample">Simple 3-Axis Example</system:String>
+
+    <system:String x:Key="Menu.Help">_Help</system:String>
+    <system:String x:Key="Menu.About">_About</system:String>
+
+    <!-- Main Window -->
+    <system:String x:Key="Window.Title">G2PLC - CNC to PLC Controller</system:String>
+
+    <!-- File Selection Section -->
+    <system:String x:Key="FileSelection.Header">File Selection</system:String>
+    <system:String x:Key="FileSelection.FileType">File Type:</system:String>
+    <system:String x:Key="FileSelection.Browse">Browse...</system:String>
+    <system:String x:Key="FileSelection.Tooltip">Selected file path</system:String>
+
+    <!-- PLC Configuration Section -->
+    <system:String x:Key="PlcConfig.Header">PLC Configuration</system:String>
+    <system:String x:Key="PlcConfig.PlcType">PLC Type:</system:String>
+    <system:String x:Key="PlcConfig.Connect">Connect</system:String>
+    <system:String x:Key="PlcConfig.Disconnect">Disconnect</system:String>
+    <system:String x:Key="PlcConfig.IpAddress">IP Address:</system:String>
+    <system:String x:Key="PlcConfig.Port">Port:</system:String>
+    <system:String x:Key="PlcConfig.EndpointUrl">Endpoint URL:</system:String>
+
+    <!-- Execution Control Section -->
+    <system:String x:Key="Execution.Header">Execution Control</system:String>
+    <system:String x:Key="Execution.Start">▶ Start</system:String>
+    <system:String x:Key="Execution.Stop">⏹ Stop</system:String>
+    <system:String x:Key="Execution.Line">Line:</system:String>
+    <system:String x:Key="Execution.Progress">Progress:</system:String>
+
+    <!-- Status and Log Section -->
+    <system:String x:Key="Status.Header">Status and Log</system:String>
+    <system:String x:Key="Status.Connected">PLC Connected</system:String>
+    <system:String x:Key="Status.Disconnected">PLC Disconnected</system:String>
+
+    <!-- About Dialog -->
+    <system:String x:Key="About.Title">About G2PLC</system:String>
+    <system:String x:Key="About.Message">G2PLC - CNC to PLC Controller
+
+Version 1.0
+
+A professional application for converting G-Code and LSF files
+to PLC commands via Modbus TCP or OPC UA protocols.
+
+© 2025</system:String>
+
+    <!-- Mappings Editor Window -->
+    <system:String x:Key="Mappings.Title">Edit Variable Mappings</system:String>
+    <system:String x:Key="Mappings.Header">Axis Mappings (G-Code Parameters to PLC Registers)</system:String>
+    <system:String x:Key="Mappings.Description">Configure which PLC register address each axis should write to:</system:String>
+    <system:String x:Key="Mappings.Axis">Axis</system:String>
+    <system:String x:Key="Mappings.AxisDescription">Description</system:String>
+    <system:String x:Key="Mappings.RegisterAddress">Register Address</system:String>
+    <system:String x:Key="Mappings.ScaleFactor">Scale Factor</system:String>
+    <system:String x:Key="Mappings.Information">Information</system:String>
+    <system:String x:Key="Mappings.Info1">• Register Address: The Modbus holding register number where this axis value will be written</system:String>
+    <system:String x:Key="Mappings.Info2">• Scale Factor: Multiplier applied to the value (e.g., 1000 converts mm to microns)</system:String>
+    <system:String x:Key="Mappings.Info3">• For OPC UA, the node path will be: ns=2;s=CNC.Axes.{Axis}.Position</system:String>
+    <system:String x:Key="Mappings.Save">Save</system:String>
+    <system:String x:Key="Mappings.Cancel">Cancel</system:String>
+
+    <!-- File Types -->
+    <system:String x:Key="FileType.GCode">G-Code</system:String>
+    <system:String x:Key="FileType.LSF">LSF (Howick)</system:String>
+
+    <!-- PLC Types -->
+    <system:String x:Key="PlcType.Modbus">Modbus</system:String>
+    <system:String x:Key="PlcType.OpcUa">OPC UA</system:String>
+
+</ResourceDictionary>

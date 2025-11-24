@@ -1,0 +1,112 @@
+{
+  "RegisterMappings": {
+    "Axes": {
+      "X": {
+        "Address": 100,
+        "ScaleFactor": 1000.0,
+        "Description": "X-axis linear position",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Y": {
+        "Address": 101,
+        "ScaleFactor": 1000.0,
+        "Description": "Y-axis linear position",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Z": {
+        "Address": 102,
+        "ScaleFactor": 1000.0,
+        "Description": "Z-axis linear position",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "A": {
+        "Address": 103,
+        "ScaleFactor": 1000.0,
+        "Description": "A-axis rotation around X",
+        "AxisType": "Rotational",
+        "Unit": "degrees"
+      },
+      "B": {
+        "Address": 104,
+        "ScaleFactor": 1000.0,
+        "Description": "B-axis rotation around Y",
+        "AxisType": "Rotational",
+        "Unit": "degrees"
+      },
+      "C": {
+        "Address": 105,
+        "ScaleFactor": 1000.0,
+        "Description": "C-axis rotation around Z",
+        "AxisType": "Rotational",
+        "Unit": "degrees"
+      }
+    },
+    "Commands": {
+      "GCommand": {
+        "Address": 6,
+        "ScaleFactor": 1.0,
+        "Description": "G command number"
+      },
+      "MCommand": {
+        "Address": 7,
+        "ScaleFactor": 1.0,
+        "Description": "M command number"
+      }
+    },
+    "Parameters": {
+      "FeedRate": {
+        "Address": 110,
+        "ScaleFactor": 10.0,
+        "Description": "Feed rate (F parameter)"
+      },
+      "SpindleSpeed": {
+        "Address": 111,
+        "ScaleFactor": 1.0,
+        "Description": "Spindle speed (S parameter)"
+      },
+      "ToolNumber": {
+        "Address": 5,
+        "ScaleFactor": 1.0,
+        "Description": "Tool number (T command)"
+      }
+    },
+    "DigitalOutputs": {
+      "CoolantFlood": {
+        "Address": 100,
+        "TriggerMCode": 8,
+        "TriggerValue": true,
+        "Description": "Flood coolant on/off"
+      },
+      "SpindleEnable": {
+        "Address": 102,
+        "TriggerMCode": 3,
+        "TriggerValue": true,
+        "Description": "Spindle motor enable"
+      }
+    }
+  },
+  "ValidationRules": {
+    "Position": {
+      "MinValue": -9999.0,
+      "MaxValue": 9999.0,
+      "ClampNegativeToZero": false
+    },
+    "FeedRate": {
+      "MinValue": 0.0,
+      "MaxValue": 10000.0
+    },
+    "SpindleSpeed": {
+      "MinValue": 0.0,
+      "MaxValue": 24000.0
+    }
+  },
+  "ProcessingOptions": {
+    "DelayBetweenCommandsMs": 100,
+    "VerifyWritesEnabled": false,
+    "ContinueOnError": true,
+    "MaxRetries": 3
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "RegisterMappings": {
+    "Axes": {
+      "X": {
+        "Address": 100,
+        "ScaleFactor": 1000,
+        "Description": "X-axis position (mm to microns)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Y": {
+        "Address": 101,
+        "ScaleFactor": 1000,
+        "Description": "Y-axis position (mm to microns)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Z": {
+        "Address": 102,
+        "ScaleFactor": 1000,
+        "Description": "Z-axis position (mm to microns)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "A": {
+        "Address": 103,
+        "ScaleFactor": 1000,
+        "Description": "A-axis rotation",
+        "AxisType": "Rotary",
+        "Unit": "degrees"
+      },
+      "B": {
+        "Address": 104,
+        "ScaleFactor": 1000,
+        "Description": "B-axis rotation",
+        "AxisType": "Rotary",
+        "Unit": "degrees"
+      },
+      "C": {
+        "Address": 105,
+        "ScaleFactor": 1000,
+        "Description": "C-axis rotation",
+        "AxisType": "Rotary",
+        "Unit": "degrees"
+      }
+    },
+    "FeedRate": {
+      "Address": 110,
+      "ScaleFactor": 10,
+      "Description": "Feed rate (F command)"
+    },
+    "SpindleSpeed": {
+      "Address": 111,
+      "ScaleFactor": 1,
+      "Description": "Spindle speed (S command)"
+    },
+    "ToolNumber": {
+      "Address": 112,
+      "ScaleFactor": 1,
+      "Description": "Tool number (T command)"
+    },
+    "GCommand": {
+      "Address": 120,
+      "ScaleFactor": 1,
+      "Description": "G-code command number"
+    },
+    "MCommand": {
+      "Address": 121,
+      "ScaleFactor": 1,
+      "Description": "M-code command number"
+    }
+  },
+  "Notes": [
+    "This is a Modbus TCP mapping example for a 6-axis CNC machine",
+    "Addresses are 0-based (Register 40001 = Address 0)",
+    "ScaleFactor multiplies the value before writing to PLC",
+    "Example: X=10.5mm with ScaleFactor=1000 → Write 10500 to register 100",
+    "For negative values, consider two's complement or separate sign registers"
+  ]
+}

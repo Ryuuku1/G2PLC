@@ -1,0 +1,48 @@
+{
+  "RegisterMappings": {
+    "Axes": {
+      "X": {
+        "Address": 0,
+        "ScaleFactor": 1000,
+        "Description": "X-axis (horizontal)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Y": {
+        "Address": 1,
+        "ScaleFactor": 1000,
+        "Description": "Y-axis (vertical)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      },
+      "Z": {
+        "Address": 2,
+        "ScaleFactor": 1000,
+        "Description": "Z-axis (depth)",
+        "AxisType": "Linear",
+        "Unit": "mm"
+      }
+    },
+    "FeedRate": {
+      "Address": 10,
+      "ScaleFactor": 10,
+      "Description": "Feed rate"
+    },
+    "SpindleSpeed": {
+      "Address": 11,
+      "ScaleFactor": 1,
+      "Description": "Spindle RPM"
+    },
+    "ToolNumber": {
+      "Address": 12,
+      "ScaleFactor": 1,
+      "Description": "Active tool"
+    }
+  },
+  "Notes": [
+    "Simple 3-axis CNC machine mapping (X, Y, Z)",
+    "Modbus addresses: 40001-40003 for axes (0-2 in 0-based addressing)",
+    "ScaleFactor=1000 converts millimeters to microns for precision",
+    "Suitable for basic mills, routers, and 3D printers"
+  ]
+}
