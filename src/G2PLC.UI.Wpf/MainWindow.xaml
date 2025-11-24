@@ -83,6 +83,8 @@
                 <MenuItem Header="{DynamicResource Menu.EditMappings}" Command="{Binding EditMappingsCommand}"/>
                 <MenuItem Header="{DynamicResource Menu.LoadMappings}" Command="{Binding LoadMappingsCommand}"/>
                 <MenuItem Header="{DynamicResource Menu.SaveMappings}" Command="{Binding SaveMappingsCommand}"/>
+                <Separator/>
+                <MenuItem Header="{DynamicResource Menu.ConfigureMonitoringRegisters}" Command="{Binding ConfigureMonitoringCommand}"/>
             </MenuItem>
             <MenuItem Header="{DynamicResource Menu.View}">
                 <MenuItem Header="{DynamicResource Menu.DarkTheme}" Click="DarkTheme_Click" IsCheckable="True" IsChecked="True" Name="DarkThemeMenuItem"/>
@@ -106,196 +108,448 @@
             </MenuItem>
         </Menu>
 
-        <Grid Margin="10" DockPanel.Dock="Bottom">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- File Selection Section -->
-            <GroupBox Grid.Row="0" Header="{DynamicResource FileSelection.Header}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Column="0" Content="{DynamicResource FileSelection.FileType}"/>
-                    <ComboBox Grid.Column="1"
-                              ItemsSource="{Binding FileTypes}"
-                              SelectedItem="{Binding FileType}"/>
-
-                    <TextBox Grid.Column="2"
-                             Text="{Binding FilePath}"
-                             IsReadOnly="True"
-                             ToolTip="{DynamicResource FileSelection.Tooltip}"/>
-
-                    <Button Grid.Column="3"
-                            Content="{DynamicResource FileSelection.Browse}"
-                            Command="{Binding LoadFileCommand}"/>
-                </Grid>
-            </GroupBox>
-
-            <!-- PLC Configuration Section -->
-            <GroupBox Grid.Row="1" Header="{DynamicResource PlcConfig.Header}">
-                <Grid>
+        <TabControl Margin="10" DockPanel.Dock="Bottom">
+            <!-- Tab 1: Control -->
+            <TabItem Header="{DynamicResource Tab.Control}">
+                <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <!-- File Selection Section -->
+                    <GroupBox Grid.Row="0" Header="{DynamicResource FileSelection.Header}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Content="{DynamicResource PlcConfig.PlcType}"/>
-                        <ComboBox Grid.Column="1"
-                                  ItemsSource="{Binding PlcTypes}"
-                                  SelectedItem="{Binding PlcType}"/>
+                            <Label Grid.Column="0" Content="{DynamicResource FileSelection.FileType}"/>
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding FileTypes}"
+                                      SelectedItem="{Binding FileType}"/>
 
-                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Content="{DynamicResource PlcConfig.Connect}"
-                                    Command="{Binding ConnectPlcCommand}"
-                                    IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBoolConverter}}"/>
-                            <Button Content="{DynamicResource PlcConfig.Disconnect}"
-                                    Command="{Binding DisconnectPlcCommand}"
-                                    IsEnabled="{Binding IsConnected}"/>
-                        </StackPanel>
-                    </Grid>
+                            <TextBox Grid.Column="2"
+                                     Text="{Binding FilePath}"
+                                     IsReadOnly="True"
+                                     ToolTip="{DynamicResource FileSelection.Tooltip}"/>
 
-                    <Grid Grid.Row="1" Visibility="{Binding PlcType, Converter={StaticResource PlcTypeToVisibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="100"/>
-                        </Grid.ColumnDefinitions>
+                            <Button Grid.Column="3"
+                                    Content="{DynamicResource FileSelection.Browse}"
+                                    Command="{Binding LoadFileCommand}"/>
+                        </Grid>
+                    </GroupBox>
 
-                        <!-- Modbus Settings -->
-                        <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal"
-                                    Visibility="{Binding PlcType, Converter={StaticResource ModbusVisibilityConverter}}">
-                            <Label Content="{DynamicResource PlcConfig.IpAddress}"/>
-                            <TextBox Width="150" Text="{Binding PlcAddress}"/>
-                            <Label Content="{DynamicResource PlcConfig.Port}"/>
-                            <TextBox Width="80" Text="{Binding PlcPort}"/>
-                        </StackPanel>
+                    <!-- PLC Configuration Section -->
+                    <GroupBox Grid.Row="1" Header="{DynamicResource PlcConfig.Header}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <!-- OPC UA Settings -->
-                        <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal"
-                                    Visibility="{Binding PlcType, Converter={StaticResource OpcUaVisibilityConverter}}">
-                            <Label Content="{DynamicResource PlcConfig.EndpointUrl}"/>
-                            <TextBox Width="400" Text="{Binding OpcUaEndpoint}"/>
-                        </StackPanel>
-                    </Grid>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Content="{DynamicResource PlcConfig.PlcType}"/>
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding PlcTypes}"
+                                          SelectedItem="{Binding PlcType}"/>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="{DynamicResource PlcConfig.Connect}"
+                                            Command="{Binding ConnectPlcCommand}"
+                                            IsEnabled="{Binding IsConnected, Converter={StaticResource InverseBoolConverter}}"/>
+                                    <Button Content="{DynamicResource PlcConfig.Disconnect}"
+                                            Command="{Binding DisconnectPlcCommand}"
+                                            IsEnabled="{Binding IsConnected}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="1" Visibility="{Binding PlcType, Converter={StaticResource PlcTypeToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Modbus Settings -->
+                                <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal"
+                                            Visibility="{Binding PlcType, Converter={StaticResource ModbusVisibilityConverter}}">
+                                    <Label Content="{DynamicResource PlcConfig.IpAddress}"/>
+                                    <TextBox Width="150" Text="{Binding PlcAddress}"/>
+                                    <Label Content="{DynamicResource PlcConfig.Port}"/>
+                                    <TextBox Width="80" Text="{Binding PlcPort}"/>
+                                </StackPanel>
+
+                                <!-- OPC UA Settings -->
+                                <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal"
+                                            Visibility="{Binding PlcType, Converter={StaticResource OpcUaVisibilityConverter}}">
+                                    <Label Content="{DynamicResource PlcConfig.EndpointUrl}"/>
+                                    <TextBox Width="400" Text="{Binding OpcUaEndpoint}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Execution Control Section -->
+                    <GroupBox Grid.Row="2" Header="{DynamicResource Execution.Header}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Button Content="{DynamicResource Execution.Start}"
+                                        Style="{StaticResource StartButton}"
+                                        Command="{Binding StartExecutionCommand}"
+                                        MinWidth="120"/>
+                                <Button Content="{DynamicResource Execution.Stop}"
+                                        Style="{StaticResource StopButton}"
+                                        Command="{Binding StopExecutionCommand}"
+                                        MinWidth="120"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource Execution.Line}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding CurrentLine}" Width="50" TextAlignment="Right"/>
+                                <TextBlock Text="/" Margin="0,5"/>
+                                <TextBlock Text="{Binding TotalLines}" Width="50"/>
+
+                                <TextBlock Text="{DynamicResource Execution.Progress}" FontWeight="Bold" Margin="20,5,5,5"/>
+                                <TextBlock Text="{Binding ProgressPercentage}" Width="40" TextAlignment="Right"/>
+                                <TextBlock Text="%" Margin="0,5"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Progress and Log Section -->
+                    <GroupBox Grid.Row="3" Header="{DynamicResource Status.Header}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Connection Status -->
+                            <Border Grid.Row="0"
+                                    Background="{Binding IsConnected, Converter={StaticResource ConnectionStatusColorConverter}}"
+                                    Padding="10"
+                                    Margin="0,0,0,5"
+                                    CornerRadius="3">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="●"
+                                               FontSize="16"
+                                               Margin="0,0,10,0"
+                                               Foreground="White"/>
+                                    <TextBlock Text="{Binding IsConnected, Converter={StaticResource ConnectionStatusTextConverter}}"
+                                               Foreground="White"
+                                               FontWeight="Bold"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Progress Bar -->
+                            <ProgressBar Grid.Row="1"
+                                         Height="25"
+                                         Value="{Binding ProgressPercentage}"
+                                         Minimum="0"
+                                         Maximum="100"
+                                         Margin="0,0,0,5"/>
+
+                            <!-- Log Messages -->
+                            <Border Grid.Row="2"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="1"
+                                    Background="{DynamicResource BackgroundBrush}">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding LogMessages}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}"
+                                                           Margin="5,2"
+                                                           FontFamily="Consolas"
+                                                           FontSize="12"
+                                                           Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Status Bar -->
+                    <Border Grid.Row="4"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Padding="10,5"
+                            Margin="0,5,0,0">
+                        <TextBlock Text="{Binding StatusMessage}"
+                                   Foreground="White"
+                                   FontWeight="Bold"/>
+                    </Border>
                 </Grid>
-            </GroupBox>
+            </TabItem>
 
-            <!-- Execution Control Section -->
-            <GroupBox Grid.Row="2" Header="{DynamicResource Execution.Header}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <Button Content="{DynamicResource Execution.Start}"
-                                Style="{StaticResource StartButton}"
-                                Command="{Binding StartExecutionCommand}"
-                                MinWidth="120"/>
-                        <Button Content="{DynamicResource Execution.Stop}"
-                                Style="{StaticResource StopButton}"
-                                Command="{Binding StopExecutionCommand}"
-                                MinWidth="120"/>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource Execution.Line}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding CurrentLine}" Width="50" TextAlignment="Right"/>
-                        <TextBlock Text="/" Margin="0,5"/>
-                        <TextBlock Text="{Binding TotalLines}" Width="50"/>
-
-                        <TextBlock Text="{DynamicResource Execution.Progress}" FontWeight="Bold" Margin="20,5,5,5"/>
-                        <TextBlock Text="{Binding ProgressPercentage}" Width="40" TextAlignment="Right"/>
-                        <TextBlock Text="%" Margin="0,5"/>
-                    </StackPanel>
-                </Grid>
-            </GroupBox>
-
-            <!-- Progress and Log Section -->
-            <GroupBox Grid.Row="3" Header="{DynamicResource Status.Header}">
-                <Grid>
+            <!-- Tab 2: PLC Monitoring -->
+            <TabItem Header="{DynamicResource Tab.Monitoring}">
+                <Grid Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Connection Status -->
-                    <Border Grid.Row="0"
-                            Background="{Binding IsConnected, Converter={StaticResource ConnectionStatusColorConverter}}"
-                            Padding="10"
-                            Margin="0,0,0,5"
-                            CornerRadius="3">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="●"
-                                       FontSize="16"
-                                       Margin="0,0,10,0"
-                                       Foreground="White"/>
-                            <TextBlock Text="{Binding IsConnected, Converter={StaticResource ConnectionStatusTextConverter}}"
-                                       Foreground="White"
-                                       FontWeight="Bold"/>
-                        </StackPanel>
-                    </Border>
+                    <!-- Control Panel -->
+                    <GroupBox Grid.Row="0" Header="{DynamicResource Monitor.Title}" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                    <!-- Progress Bar -->
-                    <ProgressBar Grid.Row="1"
-                                 Height="25"
-                                 Value="{Binding ProgressPercentage}"
-                                 Minimum="0"
-                                 Maximum="100"
-                                 Margin="0,0,0,5"/>
+                            <!-- Monitoring Controls -->
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                                <Button Content="{DynamicResource Monitor.StartMonitoring}"
+                                        Command="{Binding StartMonitoringCommand}"
+                                        IsEnabled="{Binding IsConnected}"
+                                        Background="{DynamicResource SuccessBrush}"
+                                        Foreground="White"
+                                        Padding="10,5"
+                                        Margin="0,0,5,0"
+                                        MinWidth="150"/>
+                                <Button Content="{DynamicResource Monitor.StopMonitoring}"
+                                        Command="{Binding StopMonitoringCommand}"
+                                        IsEnabled="{Binding IsMonitoringActive}"
+                                        Background="{DynamicResource DangerBrush}"
+                                        Foreground="White"
+                                        Padding="10,5"
+                                        Margin="0,0,20,0"
+                                        MinWidth="150"/>
 
-                    <!-- Log Messages -->
-                    <Border Grid.Row="2"
-                            BorderBrush="{DynamicResource BorderBrush}"
-                            BorderThickness="1"
-                            Background="{DynamicResource BackgroundBrush}">
+                                <TextBlock Text="{DynamicResource Monitor.RefreshRate}"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,5,0"/>
+                                <TextBox Text="{Binding RefreshRate, Mode=TwoWay}"
+                                         Width="80"
+                                         VerticalAlignment="Center"
+                                         Margin="0,0,20,0"/>
+
+                                <TextBlock Text="{DynamicResource Monitor.LastUpdate}"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,5,0"/>
+                                <TextBlock Text="{Binding LastUpdateTime}"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource PrimaryBrush}"/>
+                            </StackPanel>
+
+                            <!-- Info Message -->
+                            <Border Grid.Row="1"
+                                    Background="{DynamicResource SurfaceBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="3"
+                                    Padding="10"
+                                    Margin="5">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="ℹ"
+                                               FontSize="16"
+                                               Foreground="{DynamicResource PrimaryBrush}"
+                                               Margin="0,0,10,0"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">
+                                        <Run Text="Configure registers to monitor via " />
+                                        <Run Text="Configuration → Configure Monitoring Registers" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Register List with Live Values -->
+                    <GroupBox Grid.Row="1" Header="{DynamicResource Monitor.RegistersHeader}">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding LogMessages}">
+                            <ItemsControl ItemsSource="{Binding MonitoredRegisters}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding}"
-                                                   Margin="5,2"
-                                                   FontFamily="Consolas"
-                                                   FontSize="12"
-                                                   Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                        <Border Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                Margin="5"
+                                                Padding="15"
+                                                CornerRadius="3">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="200"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Register Address Badge -->
+                                                <Border Grid.Column="0"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        CornerRadius="3"
+                                                        Padding="10,5"
+                                                        Margin="0,0,15,0">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{DynamicResource Monitor.RegisterAddress}"
+                                                                   FontSize="9"
+                                                                   Foreground="White"
+                                                                   Opacity="0.8"
+                                                                   HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding Address}"
+                                                                   FontSize="18"
+                                                                   FontWeight="Bold"
+                                                                   Foreground="White"
+                                                                   HorizontalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- Current Value Display -->
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock Text="{DynamicResource Monitor.RegisterValue}"
+                                                               FontSize="10"
+                                                               Opacity="0.7"
+                                                               Margin="0,0,0,5"/>
+                                                    <TextBlock Text="{Binding CurrentValue}"
+                                                               FontSize="32"
+                                                               FontWeight="Bold"
+                                                               Foreground="{DynamicResource SuccessBrush}"/>
+                                                </StackPanel>
+
+                                                <!-- Description -->
+                                                <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="15,0,0,0">
+                                                    <TextBlock Text="{DynamicResource Monitor.Description}"
+                                                               FontSize="10"
+                                                               Opacity="0.7"
+                                                               Margin="0,0,0,5"/>
+                                                    <TextBlock Text="{Binding Description}"
+                                                               FontSize="14"
+                                                               TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
-                    </Border>
+                    </GroupBox>
                 </Grid>
-            </GroupBox>
+            </TabItem>
 
-            <!-- Status Bar -->
-            <Border Grid.Row="4"
-                    Background="{DynamicResource PrimaryBrush}"
-                    Padding="10,5"
-                    Margin="0,5,0,0">
-                <TextBlock Text="{Binding StatusMessage}"
-                           Foreground="White"
-                           FontWeight="Bold"/>
-            </Border>
-        </Grid>
+            <!-- Tab 3: Execution Flow -->
+            <TabItem Header="{DynamicResource Tab.ExecutionFlow}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Previous Steps -->
+                        <GroupBox Grid.Row="0" Header="{DynamicResource Flow.PreviousSteps}" Margin="0,0,0,10">
+                            <ItemsControl ItemsSource="{Binding PreviousSteps}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{DynamicResource SuccessBrush}"
+                                                Padding="10"
+                                                Margin="0,2"
+                                                CornerRadius="3">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="60"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding LineNumber, StringFormat='Line {0}'}"
+                                                           Foreground="White"
+                                                           FontWeight="Bold"/>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding Command}"
+                                                           Foreground="White"
+                                                           FontFamily="Consolas"
+                                                           Margin="10,0,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Current Step -->
+                        <GroupBox Grid.Row="1" Header="{DynamicResource Flow.CurrentStep}" Margin="0,0,0,10">
+                            <Border Background="#FFA500"
+                                    Padding="15"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding CurrentStep.LineNumber, StringFormat='Line {0}'}"
+                                               Foreground="White"
+                                               FontWeight="Bold"
+                                               FontSize="14"/>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding CurrentStep.Command}"
+                                               Foreground="White"
+                                               FontFamily="Consolas"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Margin="10,0,0,0"/>
+                                </Grid>
+                            </Border>
+                        </GroupBox>
+
+                        <!-- Next Steps -->
+                        <GroupBox Grid.Row="2" Header="{DynamicResource Flow.NextSteps}">
+                            <ItemsControl ItemsSource="{Binding NextSteps}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                Padding="10"
+                                                Margin="0,2"
+                                                CornerRadius="3">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="60"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding LineNumber, StringFormat='Line {0}'}"
+                                                           FontWeight="Bold"
+                                                           Opacity="0.7"/>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding Command}"
+                                                           FontFamily="Consolas"
+                                                           Opacity="0.7"
+                                                           Margin="10,0,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>

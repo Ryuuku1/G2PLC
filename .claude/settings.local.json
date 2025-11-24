@@ -7,7 +7,8 @@
       "Bash(dotnet new:*)",
       "Bash(dotnet sln:*)",
       "Bash(find:*)",
-      "Bash(cat src/G2PLC.UI.Wpf/MappingsEditorWindow.xaml.cs)"
+      "Bash(cat src/G2PLC.UI.Wpf/MappingsEditorWindow.xaml.cs)",
+      "Bash(dotnet run:*)"
     ],
     "deny": [],
     "ask": []

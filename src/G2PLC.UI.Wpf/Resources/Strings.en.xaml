@@ -11,6 +11,7 @@
     <system:String x:Key="Menu.EditMappings">_Edit Mappings</system:String>
     <system:String x:Key="Menu.LoadMappings">_Load Mappings File</system:String>
     <system:String x:Key="Menu.SaveMappings">_Save Mappings File</system:String>
+    <system:String x:Key="Menu.ConfigureMonitoringRegisters">Configure _Monitoring Registers</system:String>
 
     <system:String x:Key="Menu.View">_View</system:String>
     <system:String x:Key="Menu.DarkTheme">Dark Theme</system:String>
@@ -58,6 +59,36 @@
     <system:String x:Key="Status.Connected">PLC Connected</system:String>
     <system:String x:Key="Status.Disconnected">PLC Disconnected</system:String>
 
+    <!-- Tabs -->
+    <system:String x:Key="Tab.Control">Control</system:String>
+    <system:String x:Key="Tab.Monitoring">PLC Monitoring</system:String>
+    <system:String x:Key="Tab.ExecutionFlow">Execution Flow</system:String>
+
+    <!-- PLC Monitoring -->
+    <system:String x:Key="Monitor.Title">PLC Register Monitor</system:String>
+    <system:String x:Key="Monitor.ConfigWindowTitle">Configure Monitoring Registers</system:String>
+    <system:String x:Key="Monitor.ConfigHeader">Register Configuration</system:String>
+    <system:String x:Key="Monitor.RegistersHeader">Configured Registers</system:String>
+    <system:String x:Key="Monitor.RegisterAddress">Register Address</system:String>
+    <system:String x:Key="Monitor.RegisterValue">Current Value</system:String>
+    <system:String x:Key="Monitor.Description">Description</system:String>
+    <system:String x:Key="Monitor.AddRegister">Add Register</system:String>
+    <system:String x:Key="Monitor.Remove">Remove</system:String>
+    <system:String x:Key="Monitor.StartMonitoring">Start Monitoring</system:String>
+    <system:String x:Key="Monitor.StopMonitoring">Stop Monitoring</system:String>
+    <system:String x:Key="Monitor.RefreshRate">Refresh Rate (ms):</system:String>
+    <system:String x:Key="Monitor.LastUpdate">Last Update:</system:String>
+
+    <!-- Execution Flow -->
+    <system:String x:Key="Flow.Title">Execution Flow</system:String>
+    <system:String x:Key="Flow.PreviousSteps">Previous Steps</system:String>
+    <system:String x:Key="Flow.CurrentStep">Current Step</system:String>
+    <system:String x:Key="Flow.NextSteps">Next Steps</system:String>
+    <system:String x:Key="Flow.LineNumber">Line</system:String>
+    <system:String x:Key="Flow.Command">Command</system:String>
+    <system:String x:Key="Flow.Status">Status</system:String>
+    <system:String x:Key="Flow.NoExecution">No execution in progress</system:String>
+
     <!-- About Dialog -->
     <system:String x:Key="About.Title">About G2PLC</system:String>
     <system:String x:Key="About.Message">G2PLC - CNC to PLC Controller
@@ -83,6 +114,9 @@ to PLC commands via Modbus TCP or OPC UA protocols.
     <system:String x:Key="Mappings.Info3">• For OPC UA, the node path will be: ns=2;s=CNC.Axes.{Axis}.Position</system:String>
     <system:String x:Key="Mappings.Save">Save</system:String>
     <system:String x:Key="Mappings.Cancel">Cancel</system:String>
+    <system:String x:Key="Mappings.AddAxis">Add Axis</system:String>
+    <system:String x:Key="Mappings.Remove">Remove</system:String>
+    <system:String x:Key="Mappings.AxisName">Axis Name</system:String>
 
     <!-- File Types -->
     <system:String x:Key="FileType.GCode">G-Code</system:String>

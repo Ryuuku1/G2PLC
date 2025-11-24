@@ -69,9 +69,30 @@ public partial class MainViewModel : ObservableObject
     private List<GCodeCommand>? _gCodeCommands;
     private LsfFrameset? _lsfFrameset;
     private MappingConfiguration _mappingConfiguration;
+    private bool _isMonitoring;
 
     public ObservableCollection<string> FileTypes { get; } = new() { "G-Code", "LSF (Howick)" };
     public ObservableCollection<string> PlcTypes { get; } = new() { "Modbus", "OPC UA" };
+
+    // PLC Monitoring
+    public ObservableCollection<RegisterMonitorViewModel> MonitoredRegisters { get; } = new();
+
+    [ObservableProperty]
+    private int _refreshRate = 500;
+
+    [ObservableProperty]
+    private string _lastUpdateTime = "--:--:--";
+
+    [ObservableProperty]
+    private bool _isMonitoringActive = false;
+
+    // Execution Flow
+    public ObservableCollection<ExecutionStepViewModel> PreviousSteps { get; } = new();
+
+    [ObservableProperty]
+    private ExecutionStepViewModel? _currentStep;
+
+    public ObservableCollection<ExecutionStepViewModel> NextSteps { get; } = new();
 
     public MainViewModel(
         ILogger<MainViewModel> logger,
@@ -298,13 +319,18 @@ public partial class MainViewModel : ObservableObject
         if (_gCodeCommands == null) return;
 
         CurrentLine = 0;
+        var commandStrings = _gCodeCommands.Select(c => $"{c.CommandType} {string.Join(" ", c.Parameters.Select(p => $"{p.Key}{p.Value}"))}").ToList();
 
-        foreach (var command in _gCodeCommands)
+        for (int i = 0; i < _gCodeCommands.Count; i++)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            CurrentLine++;
+            var command = _gCodeCommands[i];
+            CurrentLine = i + 1;
             ProgressPercentage = (CurrentLine * 100) / TotalLines;
+
+            // Update execution flow
+            UpdateExecutionFlow(i, commandStrings);
 
             AddLog($"Executing: {command.CommandType} {string.Join(" ", command.Parameters.Select(p => $"{p.Key}{p.Value}"))}");
 
@@ -430,6 +456,22 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void ConfigureMonitoring()
+    {
+        var monitoringWindow = new MonitoringConfigWindow(MonitoredRegisters);
+        if (monitoringWindow.ShowDialog() == true)
+        {
+            // Clear and update the monitored registers
+            MonitoredRegisters.Clear();
+            foreach (var reg in monitoringWindow.MonitoredRegisters)
+            {
+                MonitoredRegisters.Add(reg);
+            }
+            AddLog($"Monitoring configuration updated ({MonitoredRegisters.Count} registers)");
+        }
+    }
+
+    [RelayCommand]
     private async Task LoadMappingsAsync()
     {
         var dialog = new OpenFileDialog
@@ -481,6 +523,108 @@ public partial class MainViewModel : ObservableObject
                 AddLog($"Failed to save mappings: {ex.Message}");
                 MessageBox.Show($"Failed to save mappings: {ex.Message}", "Save Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+    }
+
+    // PLC Monitoring Commands
+    [RelayCommand]
+    private void AddMonitorRegister()
+    {
+        MonitoredRegisters.Add(new RegisterMonitorViewModel(0, "New Register"));
+    }
+
+    [RelayCommand]
+    private void RemoveMonitorRegister(RegisterMonitorViewModel register)
+    {
+        MonitoredRegisters.Remove(register);
+    }
+
+    [RelayCommand]
+    private async Task StartMonitoringAsync()
+    {
+        if (!IsConnected)
+        {
+            AddLog("Cannot start monitoring: PLC not connected");
+            return;
+        }
+
+        IsMonitoringActive = true;
+        _isMonitoring = true;
+        AddLog("Started PLC monitoring");
+
+        await Task.Run(async () =>
+        {
+            while (_isMonitoring && IsConnected)
+            {
+                try
+                {
+                    foreach (var reg in MonitoredRegisters)
+                    {
+                        ushort value = 0;
+                        if (PlcType == "Modbus" && _modbusClient != null)
+                        {
+                            var values = await _modbusClient.ReadHoldingRegistersAsync(reg.Address, 1);
+                            value = values[0];
+                        }
+                        else if (PlcType == "OPC UA" && _opcUaClient != null)
+                        {
+                            // For OPC UA, use axis mappings or direct node path
+                            // This is simplified - you'd need proper node paths
+                            value = 0; // Placeholder
+                        }
+
+                        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            reg.CurrentValue = value;
+                        });
+                    }
+
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        LastUpdateTime = DateTime.Now.ToString("HH:mm:ss");
+                    });
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        AddLog($"Monitoring error: {ex.Message}");
+                    });
+                }
+
+                await Task.Delay(RefreshRate);
+            }
+        });
+    }
+
+    [RelayCommand]
+    private void StopMonitoring()
+    {
+        _isMonitoring = false;
+        IsMonitoringActive = false;
+        AddLog("Stopped PLC monitoring");
+    }
+
+    private void UpdateExecutionFlow(int currentLineIndex, List<string> allCommands)
+    {
+        // Update previous steps (last 5)
+        PreviousSteps.Clear();
+        for (int i = Math.Max(0, currentLineIndex - 5); i < currentLineIndex; i++)
+        {
+            PreviousSteps.Add(new ExecutionStepViewModel(i + 1, allCommands[i], "Completed"));
+        }
+
+        // Update current step
+        if (currentLineIndex < allCommands.Count)
+        {
+            CurrentStep = new ExecutionStepViewModel(currentLineIndex + 1, allCommands[currentLineIndex], "Current");
+        }
+
+        // Update next steps (next 5)
+        NextSteps.Clear();
+        for (int i = currentLineIndex + 1; i < Math.Min(allCommands.Count, currentLineIndex + 6); i++)
+        {
+            NextSteps.Add(new ExecutionStepViewModel(i + 1, allCommands[i], "Pending"));
         }
     }
 }

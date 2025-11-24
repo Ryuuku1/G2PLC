@@ -11,6 +11,7 @@
     <system:String x:Key="Menu.EditMappings">_Editar Mapeamentos</system:String>
     <system:String x:Key="Menu.LoadMappings">_Carregar Ficheiro de Mapeamentos</system:String>
     <system:String x:Key="Menu.SaveMappings">_Guardar Ficheiro de Mapeamentos</system:String>
+    <system:String x:Key="Menu.ConfigureMonitoringRegisters">Configurar Registos de _Monitorização</system:String>
 
     <system:String x:Key="Menu.View">_Ver</system:String>
     <system:String x:Key="Menu.DarkTheme">Tema Escuro</system:String>
@@ -58,6 +59,36 @@
     <system:String x:Key="Status.Connected">PLC Ligado</system:String>
     <system:String x:Key="Status.Disconnected">PLC Desligado</system:String>
 
+    <!-- Tabs -->
+    <system:String x:Key="Tab.Control">Controlo</system:String>
+    <system:String x:Key="Tab.Monitoring">Monitorização PLC</system:String>
+    <system:String x:Key="Tab.ExecutionFlow">Fluxo de Execução</system:String>
+
+    <!-- PLC Monitoring -->
+    <system:String x:Key="Monitor.Title">Monitor de Registos PLC</system:String>
+    <system:String x:Key="Monitor.ConfigWindowTitle">Configurar Registos de Monitorização</system:String>
+    <system:String x:Key="Monitor.ConfigHeader">Configuração de Registos</system:String>
+    <system:String x:Key="Monitor.RegistersHeader">Registos Configurados</system:String>
+    <system:String x:Key="Monitor.RegisterAddress">Endereço de Registo</system:String>
+    <system:String x:Key="Monitor.RegisterValue">Valor Atual</system:String>
+    <system:String x:Key="Monitor.Description">Descrição</system:String>
+    <system:String x:Key="Monitor.AddRegister">Adicionar Registo</system:String>
+    <system:String x:Key="Monitor.Remove">Remover</system:String>
+    <system:String x:Key="Monitor.StartMonitoring">Iniciar Monitorização</system:String>
+    <system:String x:Key="Monitor.StopMonitoring">Parar Monitorização</system:String>
+    <system:String x:Key="Monitor.RefreshRate">Taxa de Atualização (ms):</system:String>
+    <system:String x:Key="Monitor.LastUpdate">Última Atualização:</system:String>
+
+    <!-- Execution Flow -->
+    <system:String x:Key="Flow.Title">Fluxo de Execução</system:String>
+    <system:String x:Key="Flow.PreviousSteps">Passos Anteriores</system:String>
+    <system:String x:Key="Flow.CurrentStep">Passo Atual</system:String>
+    <system:String x:Key="Flow.NextSteps">Próximos Passos</system:String>
+    <system:String x:Key="Flow.LineNumber">Linha</system:String>
+    <system:String x:Key="Flow.Command">Comando</system:String>
+    <system:String x:Key="Flow.Status">Estado</system:String>
+    <system:String x:Key="Flow.NoExecution">Nenhuma execução em curso</system:String>
+
     <!-- About Dialog -->
     <system:String x:Key="About.Title">Acerca do G2PLC</system:String>
     <system:String x:Key="About.Message">G2PLC - Controlador CNC para PLC
@@ -83,6 +114,9 @@ em comandos PLC através dos protocolos Modbus TCP ou OPC UA.
     <system:String x:Key="Mappings.Info3">• Para OPC UA, o caminho do nó será: ns=2;s=CNC.Axes.{Axis}.Position</system:String>
     <system:String x:Key="Mappings.Save">Guardar</system:String>
     <system:String x:Key="Mappings.Cancel">Cancelar</system:String>
+    <system:String x:Key="Mappings.AddAxis">Adicionar Eixo</system:String>
+    <system:String x:Key="Mappings.Remove">Remover</system:String>
+    <system:String x:Key="Mappings.AxisName">Nome do Eixo</system:String>
 
     <!-- File Types -->
     <system:String x:Key="FileType.GCode">G-Code</system:String>

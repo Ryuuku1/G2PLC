@@ -9,7 +9,7 @@ public partial class AxisMappingViewModel : ObservableObject
     private string _axisName;
 
     [ObservableProperty]
-    private int _address;
+    private ushort _address;
 
     [ObservableProperty]
     private decimal _scaleFactor;
@@ -29,7 +29,7 @@ public partial class AxisMappingViewModel : ObservableObject
     {
         return new AxisMappingConfig
         {
-            Address = Address,
+            Address = (ushort)Address,
             ScaleFactor = ScaleFactor,
             Description = Description,
             AxisType = AxisType.Linear,
