@@ -452,103 +452,204 @@
 
             <!-- Tab 3: Execution Flow -->
             <TabItem Header="{DynamicResource Tab.ExecutionFlow}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid Margin="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                        <!-- Previous Steps -->
-                        <GroupBox Grid.Row="0" Header="{DynamicResource Flow.PreviousSteps}" Margin="0,0,0,10">
+                    <!-- Header -->
+                    <Border Grid.Row="0"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Padding="15"
+                            Margin="0,0,0,10"
+                            CornerRadius="3">
+                        <TextBlock Text="{DynamicResource Flow.Title}"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                    </Border>
+
+                    <!-- Timeline View -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="20,0">
+                            <!-- Previous Steps Section -->
                             <ItemsControl ItemsSource="{Binding PreviousSteps}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Background="{DynamicResource SuccessBrush}"
-                                                Padding="10"
-                                                Margin="0,2"
-                                                CornerRadius="3">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="60"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{Binding LineNumber, StringFormat='Line {0}'}"
+                                        <Grid Margin="0,5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Line Number Badge -->
+                                            <Border Grid.Column="0"
+                                                    Background="{DynamicResource SuccessBrush}"
+                                                    CornerRadius="15"
+                                                    Padding="8,5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding LineNumber}"
                                                            Foreground="White"
-                                                           FontWeight="Bold"/>
-                                                <TextBlock Grid.Column="1"
-                                                           Text="{Binding Command}"
-                                                           Foreground="White"
-                                                           FontFamily="Consolas"
-                                                           Margin="10,0,0,0"/>
-                                            </Grid>
-                                        </Border>
+                                                           FontWeight="Bold"
+                                                           FontSize="12"
+                                                           HorizontalAlignment="Center"/>
+                                            </Border>
+
+                                            <!-- Timeline Connector -->
+                                            <Rectangle Grid.Column="1"
+                                                       Width="3"
+                                                       Fill="{DynamicResource SuccessBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       Opacity="0.5"/>
+
+                                            <!-- Command Card -->
+                                            <Border Grid.Column="2"
+                                                    Background="{DynamicResource SurfaceBrush}"
+                                                    BorderBrush="{DynamicResource SuccessBrush}"
+                                                    BorderThickness="2"
+                                                    CornerRadius="5"
+                                                    Padding="12"
+                                                    Margin="5,0,0,0">
+                                                <StackPanel>
+                                                    <TextBlock Text="✓ Completed"
+                                                               FontSize="9"
+                                                               Foreground="{DynamicResource SuccessBrush}"
+                                                               FontWeight="Bold"
+                                                               Margin="0,0,0,5"/>
+                                                    <TextBlock Text="{Binding Command}"
+                                                               FontFamily="Consolas"
+                                                               FontSize="13"
+                                                               TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </GroupBox>
 
-                        <!-- Current Step -->
-                        <GroupBox Grid.Row="1" Header="{DynamicResource Flow.CurrentStep}" Margin="0,0,0,10">
-                            <Border Background="#FFA500"
-                                    Padding="15"
-                                    CornerRadius="3">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="60"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0"
-                                               Text="{Binding CurrentStep.LineNumber, StringFormat='Line {0}'}"
+                            <!-- Current Step (Highlighted) -->
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Animated Badge -->
+                                <Border Grid.Column="0"
+                                        Background="{DynamicResource PrimaryBrush}"
+                                        CornerRadius="20"
+                                        Padding="10,8"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding CurrentStep.LineNumber}"
                                                Foreground="White"
                                                FontWeight="Bold"
-                                               FontSize="14"/>
-                                    <TextBlock Grid.Column="1"
-                                               Text="{Binding CurrentStep.Command}"
-                                               Foreground="White"
-                                               FontFamily="Consolas"
-                                               FontSize="14"
-                                               FontWeight="Bold"
-                                               Margin="10,0,0,0"/>
-                                </Grid>
-                            </Border>
-                        </GroupBox>
+                                               FontSize="16"
+                                               HorizontalAlignment="Center"/>
+                                </Border>
 
-                        <!-- Next Steps -->
-                        <GroupBox Grid.Row="2" Header="{DynamicResource Flow.NextSteps}">
+                                <!-- Timeline Connector -->
+                                <Rectangle Grid.Column="1"
+                                           Width="4"
+                                           Fill="{DynamicResource PrimaryBrush}"
+                                           HorizontalAlignment="Center"/>
+
+                                <!-- Current Command Card (Large) -->
+                                <Border Grid.Column="2"
+                                        Background="{DynamicResource PrimaryBrush}"
+                                        CornerRadius="8"
+                                        Padding="20"
+                                        Margin="5,0,0,0">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                            <TextBlock Text="▶"
+                                                       FontSize="14"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       Margin="0,0,8,0"/>
+                                            <TextBlock Text="EXECUTING NOW"
+                                                       FontSize="11"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding CurrentStep.Command}"
+                                                   FontFamily="Consolas"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="White"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!-- Next Steps Section -->
                             <ItemsControl ItemsSource="{Binding NextSteps}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Background="{DynamicResource SurfaceBrush}"
-                                                BorderBrush="{DynamicResource BorderBrush}"
-                                                BorderThickness="1"
-                                                Padding="10"
-                                                Margin="0,2"
-                                                CornerRadius="3">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="60"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{Binding LineNumber, StringFormat='Line {0}'}"
+                                        <Grid Margin="0,5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Line Number Badge -->
+                                            <Border Grid.Column="0"
+                                                    Background="{DynamicResource BorderBrush}"
+                                                    CornerRadius="15"
+                                                    Padding="8,5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Opacity="0.6">
+                                                <TextBlock Text="{Binding LineNumber}"
+                                                           Foreground="{DynamicResource TextBrush}"
                                                            FontWeight="Bold"
+                                                           FontSize="12"
+                                                           HorizontalAlignment="Center"
                                                            Opacity="0.7"/>
-                                                <TextBlock Grid.Column="1"
-                                                           Text="{Binding Command}"
-                                                           FontFamily="Consolas"
-                                                           Opacity="0.7"
-                                                           Margin="10,0,0,0"/>
-                                            </Grid>
-                                        </Border>
+                                            </Border>
+
+                                            <!-- Timeline Connector -->
+                                            <Rectangle Grid.Column="1"
+                                                       Width="3"
+                                                       Fill="{DynamicResource BorderBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       Opacity="0.3"/>
+
+                                            <!-- Command Card -->
+                                            <Border Grid.Column="2"
+                                                    Background="{DynamicResource SurfaceBrush}"
+                                                    BorderBrush="{DynamicResource BorderBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="5"
+                                                    Padding="12"
+                                                    Margin="5,0,0,0"
+                                                    Opacity="0.7">
+                                                <StackPanel>
+                                                    <TextBlock Text="⏱ Pending"
+                                                               FontSize="9"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               Opacity="0.6"
+                                                               Margin="0,0,0,5"/>
+                                                    <TextBlock Text="{Binding Command}"
+                                                               FontFamily="Consolas"
+                                                               FontSize="13"
+                                                               TextWrapping="Wrap"
+                                                               Opacity="0.8"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </GroupBox>
-                    </Grid>
-                </ScrollViewer>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

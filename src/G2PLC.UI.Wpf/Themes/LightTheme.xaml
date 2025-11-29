@@ -100,6 +100,67 @@
     <Style TargetType="MenuItem">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border x:Name="Border"
+                          Background="{TemplateBinding Background}"
+                          BorderThickness="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Grid.Column="0"
+                                            ContentSource="Icon"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"/>
+                            <ContentPresenter Grid.Column="1"
+                                            ContentSource="Header"
+                                            Margin="5,5,5,5"
+                                            RecognizesAccessKey="True"/>
+                            <TextBlock Grid.Column="2"
+                                     Text="{TemplateBinding InputGestureText}"
+                                     Margin="5,5,5,5"/>
+                            <Path Grid.Column="3"
+                                x:Name="ArrowPath"
+                                Data="M 0 0 L 4 4 L 0 8 Z"
+                                Fill="{DynamicResource TextBrush}"
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                Visibility="Collapsed"/>
+                            <Popup x:Name="PART_Popup"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="4"
+                                 Placement="Right"
+                                 IsOpen="{TemplateBinding IsSubmenuOpen}"
+                                 AllowsTransparency="True"
+                                 Focusable="False">
+                                <Border Background="{DynamicResource SurfaceBrush}"
+                                      BorderBrush="{DynamicResource BorderBrush}"
+                                      BorderThickness="1">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Role" Value="TopLevelHeader">
+                            <Setter TargetName="PART_Popup" Property="Placement" Value="Bottom"/>
+                            <Setter TargetName="ArrowPath" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuHeader">
+                            <Setter TargetName="ArrowPath" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Other Styles -->

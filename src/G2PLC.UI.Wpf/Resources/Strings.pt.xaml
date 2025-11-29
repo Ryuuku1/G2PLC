@@ -126,4 +126,8 @@ em comandos PLC através dos protocolos Modbus TCP ou OPC UA.
     <system:String x:Key="PlcType.Modbus">Modbus</system:String>
     <system:String x:Key="PlcType.OpcUa">OPC UA</system:String>
 
+    <!-- Common Buttons -->
+    <system:String x:Key="Button.Save">Guardar</system:String>
+    <system:String x:Key="Button.Cancel">Cancelar</system:String>
+
 </ResourceDictionary>

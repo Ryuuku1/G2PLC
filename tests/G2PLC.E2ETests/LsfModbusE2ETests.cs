@@ -10,13 +10,8 @@ namespace G2PLC.E2ETests;
 /// </summary>
 public class LsfModbusE2ETests : E2ETestBase
 {
-    private readonly string _testFilePath;
-
-    public LsfModbusE2ETests()
-    {
-        _testFilePath = Path.Combine(
-            Directory.GetCurrentDirectory(), "..", "..", "..", "..", "..", "PR-2.csv");
-    }
+    private readonly string _testFilePath = Path.Combine(
+        Directory.GetCurrentDirectory(), "..", "..", "..", "..", "..", "PR-2.csv");
 
     [Fact]
     public async Task LsfToModbus_ParseAndMapFrameset_WritesAllComponents()
@@ -30,7 +25,7 @@ public class LsfModbusE2ETests : E2ETestBase
         ResetPlcState();
 
         // Act - Map and write all components
-        int componentsWritten = 0;
+        var componentsWritten = 0;
         foreach (var component in frameset.Components)
         {
             var mappings = LsfMapper.MapComponentToRegisters(component);

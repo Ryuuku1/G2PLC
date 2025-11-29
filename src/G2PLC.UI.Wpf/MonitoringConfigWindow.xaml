@@ -8,15 +8,8 @@
         Height="600"
         Width="900"
         WindowStartupLocation="CenterOwner"
-        Background="{DynamicResource BackgroundBrush}">
-
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+        Background="{DynamicResource BackgroundBrush}"
+        Foreground="{DynamicResource TextBrush}">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -33,7 +26,8 @@
                     Background="{DynamicResource SuccessBrush}"
                     Foreground="White"
                     Padding="10,5"
-                    Margin="5"/>
+                    Margin="5"
+                    MinWidth="120"/>
         </GroupBox>
 
         <!-- Register List -->
@@ -78,7 +72,8 @@
                                             Foreground="White"
                                             Padding="10,5"
                                             VerticalAlignment="Center"
-                                            Margin="10,0,0,0"/>
+                                            Margin="10,0,0,0"
+                                            MinWidth="100"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
